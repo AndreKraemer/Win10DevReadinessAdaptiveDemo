@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using AdaptiveDemo.Data;
+using System.ComponentModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -20,11 +22,79 @@ namespace AdaptiveDemo
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+
+        private Session _currentSession = SessionData.GetById(1);
+        public Session CurrentSession
+        {
+            get
+            {
+                return _currentSession;
+            }
+            set
+            {
+                if (value != _currentSession)
+                {
+                    _currentSession = value;
+                    if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("CurrentSession")); 
+                }
+            }
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.NavigationListView.ItemsSource = SessionData.GetAll();
+        }
+        private void SplitViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
+        private void NavigationListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CurrentSession = e.ClickedItem as Session;
+            if(MySplitView.DisplayMode == SplitViewDisplayMode.Overlay)
+            {
+                MySplitView.IsPaneOpen = false;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button4_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button5_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button6_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
