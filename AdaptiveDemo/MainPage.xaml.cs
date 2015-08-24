@@ -67,34 +67,50 @@ namespace AdaptiveDemo
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #region Adaptive Code
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-
+            Vibrate(0);
         }
+
+
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-
+            Vibrate(1);
         }
 
         private void Button3_Click(object sender, RoutedEventArgs e)
         {
-
+            Vibrate(2);
         }
 
         private void Button4_Click(object sender, RoutedEventArgs e)
         {
-
+            Vibrate(3);
         }
 
         private void Button5_Click(object sender, RoutedEventArgs e)
         {
-
+            Vibrate(4);
         }
 
         private void Button6_Click(object sender, RoutedEventArgs e)
         {
-
+            Vibrate(5);
         }
+
+        private static void Vibrate(int seconds)
+        {
+            var api = "Windows.Phone.Devices.Notification.VibrationDevice";
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent(api))
+            {
+
+                var dev = Windows.Phone.Devices.Notification.VibrationDevice.GetDefault();
+                dev.Vibrate(TimeSpan.FromSeconds(seconds));
+            }
+        }
+
+        #endregion
     }
 }
